@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 public class Ventana extends JFrame { 
 	
 	public Ventana() {
-		setSize(500, 500);
+		setSize(800, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocation(100,100);
 		//setBounds(100,100,500,500);
