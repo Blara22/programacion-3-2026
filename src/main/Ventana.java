@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-public class Ventana extends JFrame{
+public class Ventana extends JFrame { 
 	
 	public Ventana() {
 		setSize(500, 500);
@@ -13,7 +13,7 @@ public class Ventana extends JFrame{
 		setLocation(100,100);
 		//setBounds(100,100,500,500);
 		setResizable(false);
-		setTitle("Mi Aplicación");
+		setTitle("Mi Aplicación V2.0");
 		setLocationRelativeTo(null);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
