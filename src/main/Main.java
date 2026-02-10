@@ -5,12 +5,14 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
+import views.LoginWindow;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
-		Ventana ventanita = new Ventana();
-		showOnScreen(1, ventanita);
+		LoginWindow ventanita = new LoginWindow();
+		//showOnScreen(1, ventanita);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame ) {
