@@ -18,77 +18,86 @@ public class LoginView extends JPanel{
 	
 	public LoginView() {
 		
-		fuente = new Font("Arial", Font.ITALIC, 20);
-		setBackground(Color.BLUE);
+		fuente = new Font("Arial", Font.PLAIN, 14);
 		setLayout(null);
 		
 		inicializarComponentes();
-		//setBackground(new Color(210,165,35));
 	}
 	
 	private void inicializarComponentes() {
 		crearBotones();
+		crearLogo();
 		crearFormulario();
 	}
 	
 	private void crearBotones() {
 		
-		JButton boton = new JButton("Mi botón");
-		boton.setBounds(215,315,160,40);
-		boton.setBackground(Color.RED);
-		boton.setForeground(Color.WHITE);
+		JButton boton = new JButton("Iniciar sesión");
+		boton.setBounds(250,320,120,30);
 		boton.setToolTipText("Haz click aquí");
 		boton.setFont(fuente);
-		
-		colocarIcono(boton, "../img/icono.png");
-		
+				
 		add(boton);
 		
 	}
 	
+	private void crearLogo() {
+		JLabel lblLogo = new JLabel();
+		lblLogo.setBounds(145, 50, 100, 100);
+		lblLogo.setIcon(cargarIcono("../img/icono.png", 100, 100));
+		add(lblLogo);
+	}
+	
 	private void crearFormulario() {
 		JLabel lblSaludo = new JLabel("Bienvenido!");
-		lblSaludo.setForeground(Color.WHITE);
 		lblSaludo.setFont(fuente);
 		lblSaludo.setBounds(10,0,200,40);
 		add(lblSaludo);
 		
+		int lblX = 10, y = 170, txtX = 150;
+		
 		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setForeground(Color.WHITE);
 		lblEmail.setFont(fuente);
-		lblEmail.setBounds(10,100,200,40);
+		lblEmail.setBounds(lblX,y,200,40);
 		add(lblEmail);
 		
-		JTextField texto = new JTextField();
-		texto.setForeground(Color.BLUE);
-		texto.setFont(fuente);
-		texto.setBounds(150,100,200,40);
-		add(texto);
+		JTextField txtEmail = new JTextField();
+		txtEmail.setFont(fuente);
+		txtEmail.setBounds(txtX,y,200,40);
+		add(txtEmail);
+		
+		JLabel lblEmailRequerido = new JLabel("El email es requerido.");
+		lblEmailRequerido.setBounds(txtX, y+35, 200, 30);
+		lblEmailRequerido.setFont(new Font("Arial", Font.BOLD, 10));
+		lblEmailRequerido.setForeground(Color.RED);
+		add(lblEmailRequerido);
+		
+		y += 70;
 		
 		JLabel lblContrasena = new JLabel("Contraseña: ");
-		lblContrasena.setForeground(Color.WHITE);
 		lblContrasena.setFont(fuente);
-		lblContrasena.setBounds(10,150,200,40);
+		lblContrasena.setBounds(lblX,y,200,40);
 		add(lblContrasena);
 		
 		JPasswordField contrasena = new JPasswordField();
-		contrasena.setForeground(Color.BLUE);
 		contrasena.setFont(fuente);
-		contrasena.setBounds(150,150,200,40);
+		contrasena.setBounds(txtX,y,200,40);
 		add(contrasena);
 	}
 	
-	private void colocarIcono(JButton boton, String ruta) {
+	private ImageIcon cargarIcono(String ruta, int w, int h) {
+
 		try {
 			Image icono = ImageIO.read(getClass().getResource(ruta));
-			icono = icono.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-			boton.setIcon(new ImageIcon(icono));			
+			icono = icono.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+			return new ImageIcon(icono);
 		}catch(Exception ex) {
 			System.out.println("No está la imagen del ícono");
 		}
+		
+		return null;
 	}
 }
-
 
 
 

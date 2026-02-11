@@ -12,7 +12,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		LoginWindow ventanita = new LoginWindow();
-		//showOnScreen(1, ventanita);
+		showOnScreen(1, ventanita);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame ) {
