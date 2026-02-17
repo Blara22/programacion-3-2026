@@ -9,11 +9,11 @@ public class LoginWindow extends JFrame {
 	
 	public LoginWindow() {
 		
-		setSize(400, 400);
+		//setSize(400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocation(100,100);
+		//setLocation(100,100);
 		//setBounds(100,100,500,500);
-		setResizable(false);
+		setResizable(true);
 		setTitle("Mi Aplicación V2.0");
 		setLocationRelativeTo(null);
 		
@@ -21,7 +21,12 @@ public class LoginWindow extends JFrame {
 		Image icono = tk.getImage("src/img/icono.png");
 		setIconImage(icono);
 		
-		LoginView panelito = new LoginView();
+		//LoginView panelito = new LoginView();
+		//FlowPanel panelito = new FlowPanel();
+		//BorderPanel panelito = new BorderPanel();
+		//GridPanel panelito = new GridPanel();
+		//BoxPanel panelito = new BoxPanel();
+		GridBagPanel panelito = new GridBagPanel();
 		add(panelito);
 		
 		setVisible(true);
