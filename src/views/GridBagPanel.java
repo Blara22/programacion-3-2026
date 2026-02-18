@@ -1,9 +1,13 @@
 package views;
 
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Point;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -13,6 +17,11 @@ public class GridBagPanel extends JPanel{
 		JButton button;
 		setLayout(new GridBagLayout());
 		
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		ImageIcon iconoCursor = new ImageIcon("src/img/icono.png");
+		Cursor miCursor = tk.createCustomCursor(iconoCursor.getImage(), 
+				new Point(0,0), "Mi Cursor");
+		
 		GridBagConstraints c = new GridBagConstraints();
 			
 		button = new JButton("Button 1");
@@ -20,6 +29,7 @@ public class GridBagPanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		add(button, c);
+		button.setCursor(miCursor);
 
 		button = new JButton("Button 2");
 		c.fill = GridBagConstraints.HORIZONTAL;

@@ -11,6 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+
+import components.RoundButton;
+import components.TextPrompt;
 
 public class LoginView extends JPanel{
 	
@@ -32,8 +36,9 @@ public class LoginView extends JPanel{
 	
 	private void crearBotones() {
 		
-		JButton boton = new JButton("Iniciar sesión");
-		boton.setBounds(250,320,120,30);
+		RoundButton boton = new RoundButton("Login");
+		boton.setBounds(250,320,150,30);
+		boton.setBackground(Color.GREEN);
 		boton.setToolTipText("Haz click aquí");
 		boton.setFont(fuente);
 				
@@ -62,6 +67,7 @@ public class LoginView extends JPanel{
 		add(lblEmail);
 		
 		JTextField txtEmail = new JTextField();
+		TextPrompt promptEmail = new TextPrompt("Ingresa tu usuario", txtEmail);
 		txtEmail.setFont(fuente);
 		txtEmail.setBounds(txtX,y,200,40);
 		add(txtEmail);
@@ -80,6 +86,7 @@ public class LoginView extends JPanel{
 		add(lblContrasena);
 		
 		JPasswordField contrasena = new JPasswordField();
+		TextPrompt promptContrasena = new TextPrompt("Ingresa tu contraseña", contrasena);
 		contrasena.setFont(fuente);
 		contrasena.setBounds(txtX,y,200,40);
 		add(contrasena);
