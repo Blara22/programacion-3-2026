@@ -63,7 +63,7 @@ public class RoundButton extends JButton {
         } else {
             g2.setColor(getBackground());
         }
-        g2.fillOval(0, 0, getWidth(), getHeight());
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
         g2.dispose();
 
         // Se llama al super para que se pinte el texto
@@ -86,7 +86,7 @@ public class RoundButton extends JButton {
              * del óvalo en función del grosor. Así el borde queda dentro del botón.
              */
             int offset = (int) (borderThickness / 2);
-            g2.drawOval(offset, offset, getWidth() - offset * 2, getHeight() - 1 - offset * 2);
+            g2.drawRoundRect(offset, offset, getWidth() - offset * 2, getHeight() - 1 - offset * 2, 10, 10);
 
             g2.dispose();
         }

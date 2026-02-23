@@ -2,7 +2,11 @@ package views;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -11,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import components.RoundButton;
 import components.TextPrompt;
@@ -36,14 +39,13 @@ public class LoginView extends JPanel{
 	
 	private void crearBotones() {
 		
-		RoundButton boton = new RoundButton("Login");
-		boton.setBounds(250,320,150,30);
-		boton.setBackground(Color.GREEN);
+		JButton boton = new JButton("Login");
+		boton.setBounds(250,320,100,30);
+		//boton.setBackground(Color.GREEN);
 		boton.setToolTipText("Haz click aquí");
 		boton.setFont(fuente);
 				
 		add(boton);
-		
 	}
 	
 	private void crearLogo() {
@@ -67,7 +69,7 @@ public class LoginView extends JPanel{
 		add(lblEmail);
 		
 		JTextField txtEmail = new JTextField();
-		TextPrompt promptEmail = new TextPrompt("Ingresa tu usuario", txtEmail);
+		new TextPrompt("Ingresa tu usuario", txtEmail);
 		txtEmail.setFont(fuente);
 		txtEmail.setBounds(txtX,y,200,40);
 		add(txtEmail);
@@ -86,7 +88,7 @@ public class LoginView extends JPanel{
 		add(lblContrasena);
 		
 		JPasswordField contrasena = new JPasswordField();
-		TextPrompt promptContrasena = new TextPrompt("Ingresa tu contraseña", contrasena);
+		new TextPrompt("Ingresa tu contraseña", contrasena);
 		contrasena.setFont(fuente);
 		contrasena.setBounds(txtX,y,200,40);
 		add(contrasena);
@@ -104,6 +106,23 @@ public class LoginView extends JPanel{
 		
 		return null;
 	}
+	
+	public void paintComponent(Graphics g) {
+		
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Image fondo = null;
+		
+		try {
+			fondo = ImageIO.read(new File("src/img/fondo.jpg"));
+			//g2.drawImage(fondo, 0, 0, getWidth(), getHeight(), null);
+		} catch (IOException ex) {
+			System.out.println("La imagen no existe");
+		}
+		
+	}
+	
 }
 
 
