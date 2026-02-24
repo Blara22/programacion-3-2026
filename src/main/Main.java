@@ -4,20 +4,28 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
+import utils.AppFont;
+import views.FormularioRegistro;
 import views.LoginWindow;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		FlatDarkLaf.setup();
+		//FlatLightLaf.setup();
 		
-		LoginWindow ventanita = new LoginWindow();
-		showOnScreen(1, ventanita);
+		UIManager.put("Label.font", AppFont.normal());
+		UIManager.put("Button.font", AppFont.title());
+		UIManager.put("TextField.font", AppFont.small());
+		
+		
+		//LoginWindow ventanita = new LoginWindow();
+		FormularioRegistro formulario = new FormularioRegistro();
+		showOnScreen(1, formulario);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame ) {
