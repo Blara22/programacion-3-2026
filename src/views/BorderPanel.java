@@ -13,12 +13,13 @@ public class BorderPanel extends JPanel {
 	
 	public BorderPanel() {
 		setLayout(new BorderLayout());
-		//setBackground(Color.BLUE);
+		setBackground(Color.BLUE);
 		Border emptyBorder = BorderFactory.createEmptyBorder(20,10,20,10);
 		setBorder(emptyBorder);
 		
 		JPanel panelSuperior = new JPanel();
-		panelSuperior.setBackground(Color.GREEN);
+		panelSuperior.setOpaque(false);
+		//panelSuperior.setBackground(Color.GREEN);
 		add(panelSuperior, BorderLayout.NORTH);
 		
 		JButton b = new JButton("Hola");
@@ -35,11 +36,13 @@ public class BorderPanel extends JPanel {
 	
 	public void crearPanelCentro() {
 		JPanel panelCentro = new JPanel(new BorderLayout());
-		panelCentro.setBackground(Color.RED);
+		//panelCentro.setBackground(Color.RED);
+		panelCentro.setOpaque(false);
 		
 		JPanel panelCentroSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		panelCentro.add(panelCentroSur, BorderLayout.SOUTH);
-		panelCentroSur.setBackground(Color.ORANGE);
+		//panelCentroSur.setBackground(Color.ORANGE);
+		panelCentroSur.setOpaque(false);
 		
 		JButton btnInicio = new JButton("Iniciar sesión");
 		panelCentroSur.add(btnInicio);

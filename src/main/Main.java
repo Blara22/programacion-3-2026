@@ -11,21 +11,30 @@ import com.formdev.flatlaf.FlatLightLaf;
 import utils.AppFont;
 import views.FormularioRegistro;
 import views.LoginWindow;
+import views.MainView;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
+		try {
+	        UIManager.setLookAndFeel(
+	            UIManager.getSystemLookAndFeelClassName()
+	        );
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
 		//FlatLightLaf.setup();
 		
 		UIManager.put("Label.font", AppFont.normal());
 		UIManager.put("Button.font", AppFont.title());
-		UIManager.put("TextField.font", AppFont.small());
+		UIManager.put("TextField.font", AppFont.small());	
 		
-		
-		//LoginWindow ventanita = new LoginWindow();
-		FormularioRegistro formulario = new FormularioRegistro();
-		showOnScreen(1, formulario);
+		LoginWindow ventanita = new LoginWindow();
+		//FormularioRegistro formulario = new FormularioRegistro();
+		//MainView vista = new MainView();
+		showOnScreen(1, ventanita);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame ) {
