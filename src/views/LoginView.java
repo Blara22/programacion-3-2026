@@ -12,16 +12,20 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import components.RoundButton;
 import components.TextPrompt;
 
 public class LoginView extends JPanel{
 	
 	Font fuente;
+	JTextField txtEmail;
+	JPasswordField contrasena;
+	JLabel lblEmailRequerido;
+	JLabel lblContrasenaRequerida;
 	
 	public LoginView() {
 		
@@ -44,8 +48,18 @@ public class LoginView extends JPanel{
 		//boton.setBackground(Color.GREEN);
 		boton.setToolTipText("Haz click aquí");
 		boton.setFont(fuente);
-				
 		add(boton);
+		
+		/*boton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				login();
+			}
+			
+		});*/
+		
+		boton.addActionListener(e -> login());
 	}
 	
 	private void crearLogo() {
@@ -68,16 +82,17 @@ public class LoginView extends JPanel{
 		lblEmail.setBounds(lblX,y,200,40);
 		add(lblEmail);
 		
-		JTextField txtEmail = new JTextField();
+		txtEmail = new JTextField();
 		new TextPrompt("Ingresa tu usuario", txtEmail);
 		txtEmail.setFont(fuente);
 		txtEmail.setBounds(txtX,y,200,40);
 		add(txtEmail);
 		
-		JLabel lblEmailRequerido = new JLabel("El email es requerido.");
+		lblEmailRequerido = new JLabel("El email es requerido.");
 		lblEmailRequerido.setBounds(txtX, y+35, 200, 30);
 		lblEmailRequerido.setFont(new Font("Arial", Font.BOLD, 10));
 		lblEmailRequerido.setForeground(Color.RED);
+		lblEmailRequerido.setVisible(false);
 		add(lblEmailRequerido);
 		
 		y += 70;
@@ -87,11 +102,17 @@ public class LoginView extends JPanel{
 		lblContrasena.setBounds(lblX,y,200,40);
 		add(lblContrasena);
 		
-		JPasswordField contrasena = new JPasswordField();
+		contrasena = new JPasswordField();
 		new TextPrompt("Ingresa tu contraseña", contrasena);
 		contrasena.setFont(fuente);
 		contrasena.setBounds(txtX,y,200,40);
 		add(contrasena);
+		
+		lblContrasenaRequerida = new JLabel("");
+		lblContrasenaRequerida.setBounds(txtX, y+35, 200, 30);
+		lblContrasenaRequerida.setFont(new Font("Arial", Font.BOLD, 10));
+		lblContrasenaRequerida.setForeground(Color.RED);
+		add(lblContrasenaRequerida);
 	}
 	
 	private ImageIcon cargarIcono(String ruta, int w, int h) {
@@ -123,6 +144,48 @@ public class LoginView extends JPanel{
 		
 	}
 	
+	private void login() {
+		
+		if(validateLogin(txtEmail.getText(), String.valueOf(contrasena.getPassword()))) {
+			JOptionPane.showMessageDialog(
+				this,
+				"Se inició la sesión", 
+				"Sesión iniciada", 
+				JOptionPane.INFORMATION_MESSAGE
+			);
+		}
+	}
+	
+	private void mostrarErrorCorreo(String message) {
+		lblEmailRequerido.setText(message);
+		lblEmailRequerido.setVisible(true);
+	}
+	
+	private void mostrarErrorContrasena(String message) {
+		lblContrasenaRequerida.setText(message);
+	}
+	
+	private void resetMensajeError() {
+		lblEmailRequerido.setText("");
+		lblContrasenaRequerida.setText("");
+	}
+	
+	private boolean validateLogin(String email, String password) {
+		
+		resetMensajeError();
+		
+		if(email.trim().isEmpty()) {
+			mostrarErrorCorreo("El correo es obligatorio");
+			return false;
+		}
+				
+		if(password.trim().isEmpty()) {
+			mostrarErrorContrasena("La contraseña es obligatoria");
+			return false;
+		};
+		
+		return true;
+	}
 }
 
 

@@ -1,4 +1,4 @@
-package views;
+package views.examples;
 
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;

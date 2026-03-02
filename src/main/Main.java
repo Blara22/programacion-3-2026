@@ -17,19 +17,19 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		try {
+		/*try {
 	        UIManager.setLookAndFeel(
 	            UIManager.getSystemLookAndFeelClassName()
 	        );
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	    }
+	    }*/
 		
 		//FlatLightLaf.setup();
 		
-		UIManager.put("Label.font", AppFont.normal());
-		UIManager.put("Button.font", AppFont.title());
-		UIManager.put("TextField.font", AppFont.small());	
+		//UIManager.put("Label.font", AppFont.normal());
+		//UIManager.put("Button.font", AppFont.title());
+		//UIManager.put("TextField.font", AppFont.small());	
 		
 		LoginWindow ventanita = new LoginWindow();
 		//FormularioRegistro formulario = new FormularioRegistro();

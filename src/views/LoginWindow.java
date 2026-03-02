@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import views.examples.FlowPanel;
+
 public class LoginWindow extends JFrame { 
 	
 	public LoginWindow() {
@@ -29,12 +31,8 @@ public class LoginWindow extends JFrame {
 				new Point(0,0), "Mi Cursor");
 		//setCursor(miCursor);
 		
-		//LoginView panelito = new LoginView();
-		FlowPanel panelito = new FlowPanel();
-		//BorderPanel panelito = new BorderPanel();
-		//GridPanel panelito = new GridPanel();
-		//BoxPanel panelito = new BoxPanel();
-		//GridBagPanel panelito = new GridBagPanel();
+		//FlowPanel panelito = new FlowPanel();
+		LoginView panelito = new LoginView();
 		add(panelito);
 		
 		setVisible(true);
