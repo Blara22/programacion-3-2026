@@ -2,6 +2,7 @@ package main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -9,7 +10,7 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import utils.AppFont;
-import views.FormularioRegistro;
+import views.RegistrationView;
 import views.LoginWindow;
 import views.MainView;
 
@@ -27,30 +28,36 @@ public class Main {
 		
 		//FlatLightLaf.setup();
 		
+		/*
+		 * Estas línean cambian de forma global la fuente para labels, buttons y textfields
+		 * Si quitan el comentario verán la diferencia.
+		 */
+		
 		//UIManager.put("Label.font", AppFont.normal());
 		//UIManager.put("Button.font", AppFont.title());
 		//UIManager.put("TextField.font", AppFont.small());	
 		
 		LoginWindow ventanita = new LoginWindow();
-		//FormularioRegistro formulario = new FormularioRegistro();
+		//RegistrationView formulario = new RegistrationView();
 		//MainView vista = new MainView();
 		showOnScreen(1, ventanita);
 	}
 	
-	public static void showOnScreen(int screen, JFrame frame ) {
+	public static void showOnScreen(int screen, JFrame frame) {
 	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    GraphicsDevice[] gd = ge.getScreenDevices();
-	    int width = 0, height = 0;
-	    
-	    if( screen > -1 && screen < gd.length ) {
-	        width = gd[screen].getDefaultConfiguration().getBounds().width;
-	        height = gd[screen].getDefaultConfiguration().getBounds().height;
-	        frame.setLocation(
-	            ((width / 2) - (frame.getSize().width / 2)) + gd[screen].getDefaultConfiguration().getBounds().x, 
-	            ((height / 2) - (frame.getSize().height / 2)) + gd[screen].getDefaultConfiguration().getBounds().y
-	        );
+
+	    if (screen > -1 && screen < gd.length) {
+
+	        Rectangle bounds = gd[screen].getDefaultConfiguration().getBounds();
+
+	        int x = bounds.x + (bounds.width - frame.getWidth()) / 2;
+	        int y = bounds.y + (bounds.height - frame.getHeight()) / 2;
+
+	        frame.setLocation(x, y);
+
 	    } else {
-	        throw new RuntimeException( "No se encontró la pantalla" );
+	        throw new RuntimeException("No se encontró la pantalla");
 	    }
 	}
 

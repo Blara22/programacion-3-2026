@@ -21,36 +21,38 @@ import components.TextPrompt;
 
 public class LoginView extends JPanel{
 	
-	Font fuente;
-	JTextField txtEmail;
-	JPasswordField contrasena;
-	JLabel lblEmailRequerido;
-	JLabel lblContrasenaRequerida;
+	Font font;
+	Image backgroundImage;
+	JTextField emailField;
+	JPasswordField passwordField;
+	JLabel lblEmailRequired;
+	JLabel lblPasswordRequired;
+	
 	
 	public LoginView() {
 		
-		fuente = new Font("Arial", Font.PLAIN, 14);
+		font = new Font("Arial", Font.PLAIN, 14);
 		setLayout(null);
 		
-		inicializarComponentes();
+		loadImage();
+		initializeComponents();
 	}
 	
-	private void inicializarComponentes() {
-		crearBotones();
-		crearLogo();
-		crearFormulario();
+	private void initializeComponents() {
+		createButtons();
+		createLogo();
+		createForm();
 	}
 	
-	private void crearBotones() {
+	private void createButtons() {
 		
-		JButton boton = new JButton("Login");
-		boton.setBounds(250,320,100,30);
-		//boton.setBackground(Color.GREEN);
-		boton.setToolTipText("Haz click aquí");
-		boton.setFont(fuente);
-		add(boton);
+		JButton loginButton = new JButton("Login");
+		loginButton.setBounds(250,320,100,30);
+		loginButton.setToolTipText("Haz click aquí");
+		loginButton.setFont(font);
+		add(loginButton);
 		
-		/*boton.addActionListener(new ActionListener() {
+		/*loginButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -59,68 +61,68 @@ public class LoginView extends JPanel{
 			
 		});*/
 		
-		boton.addActionListener(e -> login());
+		loginButton.addActionListener(e -> handleLogin());
 	}
 	
-	private void crearLogo() {
+	private void createLogo() {
 		JLabel lblLogo = new JLabel();
 		lblLogo.setBounds(145, 50, 100, 100);
-		lblLogo.setIcon(cargarIcono("../img/icono.png", 100, 100));
+		lblLogo.setIcon(loadIcon("../img/icono.png", 100, 100));
 		add(lblLogo);
 	}
 	
-	private void crearFormulario() {
-		JLabel lblSaludo = new JLabel("Bienvenido!");
-		lblSaludo.setFont(fuente);
-		lblSaludo.setBounds(10,0,200,40);
-		add(lblSaludo);
+	private void createForm() {
+		JLabel lblGreeting = new JLabel("Bienvenido!");
+		lblGreeting.setFont(font);
+		lblGreeting.setBounds(10,0,200,40);
+		add(lblGreeting);
 		
-		int lblX = 10, y = 170, txtX = 150;
+		int labelX = 10, positionY = 170, textX = 150;
 		
 		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setFont(fuente);
-		lblEmail.setBounds(lblX,y,200,40);
+		lblEmail.setFont(font);
+		lblEmail.setBounds(labelX,positionY,200,40);
 		add(lblEmail);
 		
-		txtEmail = new JTextField();
-		new TextPrompt("Ingresa tu usuario", txtEmail);
-		txtEmail.setFont(fuente);
-		txtEmail.setBounds(txtX,y,200,40);
-		add(txtEmail);
+		emailField = new JTextField();
+		new TextPrompt("Ingresa tu usuario", emailField);
+		emailField.setFont(font);
+		emailField.setBounds(textX,positionY,200,40);
+		add(emailField);
 		
-		lblEmailRequerido = new JLabel("El email es requerido.");
-		lblEmailRequerido.setBounds(txtX, y+35, 200, 30);
-		lblEmailRequerido.setFont(new Font("Arial", Font.BOLD, 10));
-		lblEmailRequerido.setForeground(Color.RED);
-		lblEmailRequerido.setVisible(false);
-		add(lblEmailRequerido);
+		lblEmailRequired = new JLabel("El email es requerido.");
+		lblEmailRequired.setBounds(textX, positionY+35, 200, 30);
+		lblEmailRequired.setFont(new Font("Arial", Font.BOLD, 10));
+		lblEmailRequired.setForeground(Color.RED);
+		lblEmailRequired.setVisible(false);
+		add(lblEmailRequired);
 		
-		y += 70;
+		positionY += 70;
 		
-		JLabel lblContrasena = new JLabel("Contraseña: ");
-		lblContrasena.setFont(fuente);
-		lblContrasena.setBounds(lblX,y,200,40);
-		add(lblContrasena);
+		JLabel lblPasswordLabel = new JLabel("Contraseña: ");
+		lblPasswordLabel.setFont(font);
+		lblPasswordLabel.setBounds(labelX,positionY,200,40);
+		add(lblPasswordLabel);
 		
-		contrasena = new JPasswordField();
-		new TextPrompt("Ingresa tu contraseña", contrasena);
-		contrasena.setFont(fuente);
-		contrasena.setBounds(txtX,y,200,40);
-		add(contrasena);
+		passwordField = new JPasswordField();
+		new TextPrompt("Ingresa tu contraseña", passwordField);
+		passwordField.setFont(font);
+		passwordField.setBounds(textX,positionY,200,40);
+		add(passwordField);
 		
-		lblContrasenaRequerida = new JLabel("");
-		lblContrasenaRequerida.setBounds(txtX, y+35, 200, 30);
-		lblContrasenaRequerida.setFont(new Font("Arial", Font.BOLD, 10));
-		lblContrasenaRequerida.setForeground(Color.RED);
-		add(lblContrasenaRequerida);
+		lblPasswordRequired = new JLabel("");
+		lblPasswordRequired.setBounds(textX, positionY+35, 200, 30);
+		lblPasswordRequired.setFont(new Font("Arial", Font.BOLD, 10));
+		lblPasswordRequired.setForeground(Color.RED);
+		add(lblPasswordRequired);
 	}
 	
-	private ImageIcon cargarIcono(String ruta, int w, int h) {
+	private ImageIcon loadIcon(String path, int w, int h) {
 
 		try {
-			Image icono = ImageIO.read(getClass().getResource(ruta));
-			icono = icono.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-			return new ImageIcon(icono);
+			Image icon = ImageIO.read(getClass().getResource(path));
+			icon = icon.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+			return new ImageIcon(icon);
 		}catch(Exception ex) {
 			System.out.println("No está la imagen del ícono");
 		}
@@ -133,20 +135,26 @@ public class LoginView extends JPanel{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 		
-		Image fondo = null;
-		
+		g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
+				
+	}
+	
+	/*
+	 * En el ejemplo anterior la imagen se cargaba dentro del paintComponent, esto es una mala prática
+	 * ya que cada que sea actualiza la ventana se vuelve a cargar la imagen. Es mejor tenerla como atributo
+	 * y que se cargue una sola vez en el constructor.
+	 */
+	public void loadImage() {
 		try {
-			fondo = ImageIO.read(new File("src/img/fondo.jpg"));
-			//g2.drawImage(fondo, 0, 0, getWidth(), getHeight(), null);
+			backgroundImage = ImageIO.read(new File("src/img/fondo.jpg"));
 		} catch (IOException ex) {
 			System.out.println("La imagen no existe");
 		}
-		
 	}
 	
-	private void login() {
+	private void handleLogin() {
 		
-		if(validateLogin(txtEmail.getText(), String.valueOf(contrasena.getPassword()))) {
+		if(validateCredentials(emailField.getText(), String.valueOf(passwordField.getPassword()))) {
 			JOptionPane.showMessageDialog(
 				this,
 				"Se inició la sesión", 
@@ -156,44 +164,34 @@ public class LoginView extends JPanel{
 		}
 	}
 	
-	private void mostrarErrorCorreo(String message) {
-		lblEmailRequerido.setText(message);
-		lblEmailRequerido.setVisible(true);
+	private void showEmailError(String message) {
+		lblEmailRequired.setText(message);
+		lblEmailRequired.setVisible(true);
 	}
 	
-	private void mostrarErrorContrasena(String message) {
-		lblContrasenaRequerida.setText(message);
+	private void showPasswordError(String message) {
+		lblPasswordRequired.setText(message);
 	}
 	
-	private void resetMensajeError() {
-		lblEmailRequerido.setText("");
-		lblContrasenaRequerida.setText("");
+	private void resetErrorMessages() {
+		lblEmailRequired.setText("");
+		lblPasswordRequired.setText("");
 	}
 	
-	private boolean validateLogin(String email, String password) {
+	private boolean validateCredentials(String email, String password) {
 		
-		resetMensajeError();
+		resetErrorMessages();
 		
 		if(email.trim().isEmpty()) {
-			mostrarErrorCorreo("El correo es obligatorio");
+			showEmailError("El correo es obligatorio");
 			return false;
 		}
 				
 		if(password.trim().isEmpty()) {
-			mostrarErrorContrasena("La contraseña es obligatoria");
+			showPasswordError("La contraseña es obligatoria");
 			return false;
 		};
 		
 		return true;
 	}
 }
-
-
-
-
-
-
-
-
-
-
