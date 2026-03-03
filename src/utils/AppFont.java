@@ -10,7 +10,7 @@ public class AppFont {
 		try {
 			base = Font.createFont(
 					Font.TRUETYPE_FONT, 
-					AppFont.class.getResourceAsStream("/fonts/BetaniaPatmos.ttf"));
+					AppFont.class.getResourceAsStream("/fonts/arimo.ttf"));
 			
 		}catch(Exception e) {
 			base = new Font("Times New Roman", Font.PLAIN, 14);
@@ -22,7 +22,7 @@ public class AppFont {
 	}
 	
 	public static Font small() {
-		return base.deriveFont(12f);
+		return base.deriveFont(10f);
 	}
 	
 	public static Font title() {
