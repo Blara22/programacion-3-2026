@@ -1,6 +1,9 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,7 +20,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
+import lib.SpringUtilities;
 import views.components.TextPrompt;
 
 public class LoginView extends JPanel{
@@ -27,12 +34,10 @@ public class LoginView extends JPanel{
 	JPasswordField passwordField;
 	JLabel lblEmailRequired;
 	JLabel lblPasswordRequired;
-	
-	
+
 	public LoginView() {
-		
 		font = new Font("Arial", Font.PLAIN, 14);
-		setLayout(null);
+		setLayout(new BorderLayout());
 		
 		loadImage();
 		initializeComponents();
@@ -46,75 +51,82 @@ public class LoginView extends JPanel{
 	
 	private void createButtons() {
 		
-		JButton loginButton = new JButton("Login");
-		loginButton.setBounds(250,320,100,30);
-		loginButton.setToolTipText("Haz click aquí");
-		loginButton.setFont(font);
-		add(loginButton);
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		buttonsPanel.setOpaque(false);
+		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
-		/*loginButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				login();
-			}
-			
-		});*/
+		JButton btnLogin = new JButton("Login");
+		btnLogin.setToolTipText("Haz click aquí para iniciar sesión");
+		btnLogin.setFont(font);
+		buttonsPanel.add(btnLogin);
 		
-		loginButton.addActionListener(e -> handleLogin());
+		btnLogin.addActionListener(e-> handleLogin());
+		
+		add(buttonsPanel, BorderLayout.SOUTH);
+		
 	}
 	
 	private void createLogo() {
+		JPanel panelLogo = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelLogo.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
+		panelLogo.setOpaque(false);
 		JLabel lblLogo = new JLabel();
-		lblLogo.setBounds(145, 50, 100, 100);
 		lblLogo.setIcon(loadIcon("../img/icono.png", 100, 100));
-		add(lblLogo);
+		panelLogo.add(lblLogo);
+		add(panelLogo, BorderLayout.NORTH);
 	}
 	
 	private void createForm() {
-		JLabel lblGreeting = new JLabel("Bienvenido!");
-		lblGreeting.setFont(font);
-		lblGreeting.setBounds(10,0,200,40);
-		add(lblGreeting);
-		
-		int labelX = 10, positionY = 170, textX = 150;
+		JPanel formPanel = new JPanel();
+		formPanel.setOpaque(false);
+		formPanel.setLayout(new SpringLayout());
+		formPanel.setBorder(BorderFactory.createEmptyBorder(50,20,10,20));
 		
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setFont(font);
-		lblEmail.setBounds(labelX,positionY,200,40);
-		add(lblEmail);
+		lblEmail.setMaximumSize(new Dimension(150, lblEmail.getPreferredSize().height));
+		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		formPanel.add(lblEmail);
 		
 		emailField = new JTextField();
 		new TextPrompt("Ingresa tu usuario", emailField);
 		emailField.setFont(font);
-		emailField.setBounds(textX,positionY,200,40);
-		add(emailField);
+		emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, emailField.getPreferredSize().height));
+		formPanel.add(emailField);
+		
+		formPanel.add(new JLabel());
 		
 		lblEmailRequired = new JLabel("El email es requerido.");
-		lblEmailRequired.setBounds(textX, positionY+35, 200, 30);
 		lblEmailRequired.setFont(new Font("Arial", Font.BOLD, 10));
 		lblEmailRequired.setForeground(Color.RED);
 		lblEmailRequired.setVisible(false);
-		add(lblEmailRequired);
+		formPanel.add(lblEmailRequired);
 		
-		positionY += 70;
 		
 		JLabel lblPasswordLabel = new JLabel("Contraseña: ");
 		lblPasswordLabel.setFont(font);
-		lblPasswordLabel.setBounds(labelX,positionY,200,40);
-		add(lblPasswordLabel);
+		lblPasswordLabel.setMaximumSize(new Dimension(150, lblPasswordLabel.getPreferredSize().height));
+		formPanel.add(lblPasswordLabel);
 		
 		passwordField = new JPasswordField();
 		new TextPrompt("Ingresa tu contraseña", passwordField);
 		passwordField.setFont(font);
-		passwordField.setBounds(textX,positionY,200,40);
-		add(passwordField);
+		passwordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, passwordField.getPreferredSize().height));
+		formPanel.add(passwordField);
+		
+		formPanel.add(new JLabel());
 		
 		lblPasswordRequired = new JLabel("");
-		lblPasswordRequired.setBounds(textX, positionY+35, 200, 30);
 		lblPasswordRequired.setFont(new Font("Arial", Font.BOLD, 10));
 		lblPasswordRequired.setForeground(Color.RED);
-		add(lblPasswordRequired);
+		formPanel.add(lblPasswordRequired);
+		
+		SpringUtilities.makeCompactGrid(formPanel, 4, 2, 0, 0, 10, 10);
+		
+		add(formPanel);
+		
+		
 	}
 	
 	private ImageIcon loadIcon(String path, int w, int h) {
@@ -157,10 +169,10 @@ public class LoginView extends JPanel{
 		if(validateCredentials(emailField.getText(), String.valueOf(passwordField.getPassword()))) {
 			JOptionPane.showMessageDialog(
 				this,
-				"Se inició la sesión", 
-				"Sesión iniciada", 
-				JOptionPane.INFORMATION_MESSAGE
-			);
+ 				"Se inició la sesión", 
+ 				"Sesión iniciada", 
+ 				JOptionPane.INFORMATION_MESSAGE
+ 			);
 		}
 	}
 	
@@ -182,16 +194,18 @@ public class LoginView extends JPanel{
 		
 		resetErrorMessages();
 		
+		boolean valid = true;
+		
 		if(email.trim().isEmpty()) {
 			showEmailError("El correo es obligatorio");
-			return false;
+			valid = false;
 		}
 				
 		if(password.trim().isEmpty()) {
 			showPasswordError("La contraseña es obligatoria");
-			return false;
+			valid = false;
 		};
 		
-		return true;
+		return valid;
 	}
 }

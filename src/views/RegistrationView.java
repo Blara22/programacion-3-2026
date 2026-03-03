@@ -58,7 +58,6 @@ public class RegistrationView extends JFrame {
 		setSize(400, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image iconImage = toolkit.getImage("src/img/icono.png");
@@ -197,28 +196,26 @@ public class RegistrationView extends JFrame {
 
 		boolean valid = true;
 
-		if (!validateName()) {
+		if (!validateName())
 			valid = false;
-		}
 
-		if (!validateEmail()) {
+		if (!validateEmail())
 			valid = false;
-		}
-		
-		if(!validateComboBox()) 
-        	valid = false;
-        
-        if(!validateGender()) 
-        	valid = false;
-        
-        if(!validateTerms()) 
-        	valid = false;
-        
-        if(!validateDescription()) 
-        	valid = false;
-        
-        if(!validateList()) 
-        	valid = false;
+
+		if (!validateComboBox())
+			valid = false;
+
+		if (!validateGender())
+			valid = false;
+
+		if (!validateTerms())
+			valid = false;
+
+		if (!validateDescription())
+			valid = false;
+
+		if (!validateList())
+			valid = false;
 
 		if (valid) {
 			JOptionPane.showMessageDialog(this, "Registro exitoso");

@@ -7,9 +7,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MainView extends JFrame {
+public class MainWindow extends JFrame {
 
-	public MainView() {
+	public MainWindow() {
 		
 		setSize(500,500);
 		setTitle("Mi aplicación");

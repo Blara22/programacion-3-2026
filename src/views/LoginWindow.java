@@ -8,8 +8,6 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import views.examples.FlowPanel;
-
 public class LoginWindow extends JFrame { 
 	
 	public LoginWindow() {
@@ -24,12 +22,11 @@ public class LoginWindow extends JFrame {
 		Image icon = tk.getImage("src/img/icono.png");
 		setIconImage(icon);
 		
-		ImageIcon cursorIcon = new ImageIcon("src/img/icono.png");
+		/*ImageIcon cursorIcon = new ImageIcon("src/img/icono.png");
 		Cursor myCursor = tk.createCustomCursor(cursorIcon.getImage(), 
 				new Point(0,0), "Mi Cursor");
-		//setCursor(miCursor);
+		setCursor(miCursor);*/
 		
-		//FlowPanel flowPanel = new FlowPanel();
 		LoginView loginView = new LoginView();
 		add(loginView);
 		
