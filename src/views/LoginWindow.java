@@ -27,7 +27,7 @@ public class LoginWindow extends JFrame {
 				new Point(0,0), "Mi Cursor");
 		setCursor(miCursor);*/
 		
-		LoginView loginView = new LoginView();
+		LoginView loginView = new LoginView(this);
 		add(loginView);
 		
 		setVisible(true);

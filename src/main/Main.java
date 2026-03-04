@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import utils.AppFont;
-import views.RegistrationView;
+import views.RegistrationWindow;
 import views.LoginWindow;
 import views.MainWindow;
 
@@ -38,9 +38,7 @@ public class Main {
 		//UIManager.put("TextField.font", AppFont.small());	
 		
 		LoginWindow ventanita = new LoginWindow();
-		//RegistrationView formulario = new RegistrationView();
-		//MainView vista = new MainView();
-		//showOnScreen(1, formulario);
+		showOnScreen(1, ventanita);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame) {

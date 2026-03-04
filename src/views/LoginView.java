@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ import views.components.TextPrompt;
 
 public class LoginView extends JPanel{
 	
+	LoginWindow window;
 	Font font;
 	Image backgroundImage;
 	JTextField emailField;
@@ -35,7 +37,8 @@ public class LoginView extends JPanel{
 	JLabel lblEmailRequired;
 	JLabel lblPasswordRequired;
 
-	public LoginView() {
+	public LoginView(LoginWindow window) {
+		this.window = window;
 		font = new Font("Arial", Font.PLAIN, 14);
 		setLayout(new BorderLayout());
 		
@@ -62,6 +65,13 @@ public class LoginView extends JPanel{
 		buttonsPanel.add(btnLogin);
 		
 		btnLogin.addActionListener(e-> handleLogin());
+		
+		JButton btnRegister = new JButton("Regístrate");
+		btnRegister.setToolTipText("¿No tienes cuenta? Créala aquí");
+		btnRegister.setFont(font);
+		buttonsPanel.add(btnRegister);
+		
+		btnRegister.addActionListener(e-> handleRegistration());
 		
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
@@ -173,7 +183,15 @@ public class LoginView extends JPanel{
  				"Sesión iniciada", 
  				JOptionPane.INFORMATION_MESSAGE
  			);
+			
+			new MainWindow();
+			window.dispose();
 		}
+	}
+	
+	private void handleRegistration() {
+		new RegistrationWindow();
+		window.dispose();
 	}
 	
 	private void showEmailError(String message) {
@@ -208,4 +226,11 @@ public class LoginView extends JPanel{
 		
 		return valid;
 	}
+	
+	
+	
+	
+	
+	
+	
 }

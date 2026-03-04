@@ -28,7 +28,7 @@ import javax.swing.SwingConstants;
 import utils.AppFont;
 import views.components.ErrorLabel;
 
-public class RegistrationView extends JFrame {
+public class RegistrationWindow extends JFrame {
 
 	private JTextField txtName;
 	private JTextField txtEmail;
@@ -52,12 +52,12 @@ public class RegistrationView extends JFrame {
 	private JLabel lblErrorList;
 	private JLabel lblErrorDescription;
 
-	public RegistrationView() {
+	public RegistrationWindow() {
 
 		setTitle("Formulario de Registro");
 		setSize(400, 600);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image iconImage = toolkit.getImage("src/img/icono.png");
@@ -155,6 +155,20 @@ public class RegistrationView extends JFrame {
 		btnValidate.addActionListener(e -> validateForm());
 
 		panel.add(btnValidate);
+		
+		JButton btnReturn = new JButton("Regresar");
+		btnReturn.addActionListener(e -> {
+			
+			int option = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas regresar? Se perderán todos los datos");
+			
+			if(option == JOptionPane.YES_OPTION) {
+				new LoginWindow();
+				dispose();
+			}
+			
+		});
+		
+		panel.add(btnReturn);
 
 		return panel;
 	}
