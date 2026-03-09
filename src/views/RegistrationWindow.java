@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import utils.AppFont;
 import views.components.ErrorLabel;
@@ -57,7 +59,7 @@ public class RegistrationWindow extends JFrame {
 		setTitle("Formulario de Registro");
 		setSize(400, 600);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image iconImage = toolkit.getImage("src/img/icono.png");
@@ -85,13 +87,13 @@ public class RegistrationWindow extends JFrame {
 	private JScrollPane createFormPanel() {
 
 		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+		
 		JScrollPane scroll = new JScrollPane(panel);
 		scroll.setBorder(null);
 		scroll.setHorizontalScrollBar(null);
 		scroll.getVerticalScrollBar().setUnitIncrement(14);
-
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
 		txtName = new JTextField();
 		txtEmail = new JTextField();
@@ -119,6 +121,8 @@ public class RegistrationWindow extends JFrame {
 		lblErrorTerms = createErrorLabel();
 		lblErrorList = createErrorLabel();
 		lblErrorDescription = createErrorLabel();
+		
+		assignListeners();
 
 		/* CREAR PANELES CON COMPONENTES */
 
@@ -204,6 +208,35 @@ public class RegistrationWindow extends JFrame {
 
 		return label;
 	}
+	
+	private void assignListeners() {
+		cboCountry.addActionListener(e -> {
+			validateComboBox();
+		});
+		
+		chkTerms.addActionListener(e -> validateTerms());
+		
+		txtName.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				validateName();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				validateName();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				validateName();
+			}
+		});
+		
+		lstLanguages.addListSelectionListener(e -> validateList());
+		
+	}
 
 	private void validateForm() {
 		resetErrorLabels();
@@ -238,12 +271,8 @@ public class RegistrationWindow extends JFrame {
 	}
 
 	private void resetErrorLabels() {
-		lblErrorName.setText("");
 		lblErrorEmail.setText("");
-		lblErrorCombo.setText("");
 		lblErrorGender.setText("");
-		lblErrorTerms.setText("");
-		lblErrorList.setText("");
 		lblErrorDescription.setText("");
 	}
 
@@ -253,7 +282,13 @@ public class RegistrationWindow extends JFrame {
 			lblErrorName.setText("El nombre es obligatorio");
 			return false;
 		}
+		
+		if (txtName.getText().trim().length() <= 3) {
+			lblErrorName.setText("Mínimo 4 caracteres");
+			return false;
+		}
 
+		lblErrorName.setText("");
 		return true;
 	}
 
@@ -273,12 +308,13 @@ public class RegistrationWindow extends JFrame {
 	}
 
 	private boolean validateComboBox() {
-
+		
 		if (cboCountry.getSelectedIndex() == 0) {
 			lblErrorCombo.setText("Seleccione un país");
 			return false;
 		}
 
+		lblErrorCombo.setText("");
 		return true;
 	}
 
@@ -299,6 +335,7 @@ public class RegistrationWindow extends JFrame {
 			return false;
 		}
 
+		lblErrorTerms.setText("");
 		return true;
 	}
 
@@ -319,7 +356,15 @@ public class RegistrationWindow extends JFrame {
 			return false;
 		}
 
+		lblErrorList.setText("");
 		return true;
 	}
 
 }
+
+
+
+
+
+
+

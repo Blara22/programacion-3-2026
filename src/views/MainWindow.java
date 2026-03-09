@@ -6,9 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class MainWindow extends JFrame {
 
+	JMenuItem salir;
+	
 	public MainWindow() {
 		
 		setSize(500,500);
@@ -17,6 +20,7 @@ public class MainWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setMenu();
+		assignMenuListeners();
 		setVisible(true);
 		
 	}
@@ -40,7 +44,7 @@ public class MainWindow extends JFrame {
 		
 		archivo.addSeparator();
 		
-		JMenuItem salir = new JMenuItem("Salir");
+		salir = new JMenuItem("Salir");
 		salir.setMnemonic(KeyEvent.VK_S);
 		archivo.add(salir);
 		
@@ -57,6 +61,17 @@ public class MainWindow extends JFrame {
 		JMenuItem opcion2 = new JMenuItem("Opción 2");
 		otraOpcion.add(opcion2);
 		
+	}
+	
+	public void assignMenuListeners() {
+		salir.addActionListener(e -> {
+			int option = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas regresar? Se perderán todos los datos", "¿Seguro?", JOptionPane.YES_NO_OPTION);
+			
+			if(option == JOptionPane.YES_OPTION) {
+				new LoginWindow();
+				dispose();
+			}
+		});
 	}
 	
 }
