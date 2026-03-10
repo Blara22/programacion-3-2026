@@ -37,7 +37,7 @@ public class Main {
 		//UIManager.put("Button.font", AppFont.title());
 		//UIManager.put("TextField.font", AppFont.small());	
 		
-		
+		//MainWindow ventanita = new MainWindow();
 		LoginWindow ventanita = new LoginWindow();
 		showOnScreen(1, ventanita);
 	}

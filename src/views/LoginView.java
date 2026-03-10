@@ -2,12 +2,15 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,6 +40,7 @@ public class LoginView extends JPanel{
 	JPasswordField passwordField;
 	JLabel lblEmailRequired;
 	JLabel lblPasswordRequired;
+	Color defaultButtonColor;
 
 	public LoginView(LoginWindow window) {
 		this.window = window;
@@ -59,22 +64,61 @@ public class LoginView extends JPanel{
 		buttonsPanel.setOpaque(false);
 		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
+		JLabel lblRegister = new JLabel("¿No tienes cuenta? Regístrate aquí");
+		lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lblRegister.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				handleRegistration();
+			}
+			
+			public void mouseEntered(MouseEvent e) {
+				lblRegister.setForeground(Color.GREEN);
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				lblRegister.setForeground(Color.BLACK);
+			}
+		});
+		buttonsPanel.add(lblRegister);
+		
 		JButton btnLogin = new JButton("Login");
+		defaultButtonColor = btnLogin.getBackground();
 		btnLogin.setToolTipText("Haz click aquí para iniciar sesión");
 		btnLogin.setFont(font);
 		buttonsPanel.add(btnLogin);
 		
+		btnLogin.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				changeBackground(btnLogin);
+				//btnLogin.setIcon(new ImageIcon(getClass().getResource("/img/icono.png")));
+			}
+			
+			public void mouseExited(MouseEvent e) {
+				resetBackground(btnLogin);
+			}
+		});
+		
 		btnLogin.addActionListener(e-> handleLogin());
 		
-		JButton btnRegister = new JButton("Regístrate");
+		/*JButton btnRegister = new JButton("Regístrate");
 		btnRegister.setToolTipText("¿No tienes cuenta? Créala aquí");
 		btnRegister.setFont(font);
 		buttonsPanel.add(btnRegister);
 		
-		btnRegister.addActionListener(e-> handleRegistration());
+		btnRegister.addActionListener(e-> handleRegistration());*/
 		
 		add(buttonsPanel, BorderLayout.SOUTH);
 		
+	}
+	
+	private void changeBackground(JComponent c) {
+		c.setBackground(Color.BLACK);
+		c.setForeground(Color.WHITE);
+	}
+	
+	private void resetBackground(JComponent c) {
+		c.setBackground(defaultButtonColor);
+		c.setForeground(Color.BLACK);
 	}
 	
 	private void createLogo() {
