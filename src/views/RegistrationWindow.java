@@ -7,6 +7,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -236,6 +243,71 @@ public class RegistrationWindow extends JFrame {
 		
 		lstLanguages.addListSelectionListener(e -> validateList());
 		
+		txtName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar())) {
+					System.out.println("Es número o especial");
+					e.consume();
+				}
+				
+				if(txtName.getText().length() >= 10) {
+					e.consume();
+				}
+				
+				txtName.setForeground(new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255) ));
+				
+				char c = e.getKeyChar();
+				
+				if(Character.isLowerCase(c)) {
+					e.setKeyChar(Character.toUpperCase(c));
+				}
+				
+				/*if(!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}*/
+				
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println(e.getKeyCode());
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					txtEmail.requestFocusInWindow();
+					System.out.println("Enter");
+				}
+			}
+		});
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				cboCountry.requestFocusInWindow();
+			}
+		});
+		
+		txtName.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtName.selectAll();
+			}
+		});
+		
+		txtEmail.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				txtEmail.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtEmail.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+			
+			
+		});
 	}
 
 	private void validateForm() {

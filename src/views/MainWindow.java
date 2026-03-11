@@ -1,11 +1,14 @@
 package views;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -23,7 +26,7 @@ public class MainWindow extends JFrame {
 		setSize(500,500);
 		setTitle("Mi aplicación");
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		setMenu();
 		assignMenuListeners();
@@ -50,6 +53,79 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
+		/*panel.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				System.out.println("Se escribió una tecla");
+				System.out.println("Code: " + e.getKeyCode());
+				System.out.println("Char: " + e.getKeyChar());
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				System.out.println("Se soltó una tecla");
+				System.out.println("Code: " + e.getKeyCode());
+				System.out.println("Char: " + e.getKeyChar());
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				System.out.println("Se presionó una tecla");
+				System.out.println("Code: " + e.getKeyCode());
+				System.out.println("Char: " + e.getKeyChar());
+				
+			}
+		});
+		
+		panel.requestFocus();*/;
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				System.out.println("Se abrió la ventana");
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				System.out.println("Se minimizó");
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				System.out.println("Se volvió a abrir");
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				System.out.println("Perdió el focus");
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				handleClose();
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.out.println("Se cerró");
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				System.out.println("Obtuvo el focus");
+				
+			}
+		});
 	}
 	
 	public void setMenu() {
@@ -99,6 +175,16 @@ public class MainWindow extends JFrame {
 				dispose();
 			}
 		});
+	}
+	
+	private void handleClose() {
+		int option = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas regresar? Se perderán todos los datos");
+		
+		if(option == JOptionPane.YES_OPTION) {
+			System.exit(0);
+			/*new LoginWindow();
+			dispose();*/
+		}
 	}
 	
 }

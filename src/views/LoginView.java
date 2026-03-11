@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -148,6 +150,15 @@ public class LoginView extends JPanel{
 		emailField.setFont(font);
 		emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, emailField.getPreferredSize().height));
 		formPanel.add(emailField);
+		emailField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					handleLogin();
+				}
+			}
+		});
 		
 		formPanel.add(new JLabel());
 		
@@ -168,6 +179,16 @@ public class LoginView extends JPanel{
 		passwordField.setFont(font);
 		passwordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, passwordField.getPreferredSize().height));
 		formPanel.add(passwordField);
+		
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					handleLogin();
+				}
+			}
+		});
 		
 		formPanel.add(new JLabel());
 		

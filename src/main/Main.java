@@ -39,6 +39,7 @@ public class Main {
 		
 		//MainWindow ventanita = new MainWindow();
 		LoginWindow ventanita = new LoginWindow();
+		//RegistrationWindow ventanita = new RegistrationWindow();
 		showOnScreen(1, ventanita);
 	}
 	
