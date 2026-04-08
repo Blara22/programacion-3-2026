@@ -42,8 +42,10 @@ public class LoginView extends JPanel{
 	Image backgroundImage;
 	JTextField emailField;
 	JPasswordField passwordField;
-	JLabel lblEmailRequired;
-	JLabel lblPasswordRequired;
+	private JButton btnLogin;
+	private JLabel lblEmailRequired;
+	private JLabel lblPasswordRequired;
+	private JLabel lblRegister;
 	Color defaultButtonColor;
 
 	public LoginView(LoginWindow window) {
@@ -55,6 +57,42 @@ public class LoginView extends JPanel{
 		initializeComponents();
 	}
 	
+	public LoginWindow getWindow() {
+		return window;
+	}
+
+	public JTextField getEmailField() {
+		return emailField;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public JLabel getLblEmailRequired() {
+		return lblEmailRequired;
+	}
+
+	public JLabel getLblPasswordRequired() {
+		return lblPasswordRequired;
+	}
+
+	public JLabel getLblRegister() {
+		return lblRegister;
+	}
+	
+	public JButton getBtnLogin() {
+		return btnLogin;
+	}
+	
+	public String getEmail() {
+		return emailField.getText();
+	}
+	
+	public String getPassword() {
+		return String.valueOf(passwordField.getPassword());
+	}
+
 	private void initializeComponents() {
 		createButtons();
 		createLogo();
@@ -68,12 +106,9 @@ public class LoginView extends JPanel{
 		buttonsPanel.setOpaque(false);
 		buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		
-		JLabel lblRegister = new JLabel("¿No tienes cuenta? Regístrate aquí");
+		lblRegister = new JLabel("¿No tienes cuenta? Regístrate aquí");
 		lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblRegister.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				handleRegistration();
-			}
 			
 			public void mouseEntered(MouseEvent e) {
 				lblRegister.setForeground(Color.GREEN);
@@ -85,7 +120,7 @@ public class LoginView extends JPanel{
 		});
 		buttonsPanel.add(lblRegister);
 		
-		JButton btnLogin = new JButton("Login");
+		btnLogin = new JButton("Login");
 		defaultButtonColor = btnLogin.getBackground();
 		btnLogin.setToolTipText("Haz click aquí para iniciar sesión");
 		btnLogin.setFont(font);
@@ -101,18 +136,8 @@ public class LoginView extends JPanel{
 				resetBackground(btnLogin);
 			}
 		});
-		
-		btnLogin.addActionListener(e-> handleLogin());
-		
-		/*JButton btnRegister = new JButton("Regístrate");
-		btnRegister.setToolTipText("¿No tienes cuenta? Créala aquí");
-		btnRegister.setFont(font);
-		buttonsPanel.add(btnRegister);
-		
-		btnRegister.addActionListener(e-> handleRegistration());*/
-		
+
 		add(buttonsPanel, BorderLayout.SOUTH);
-		
 	}
 	
 	private void changeBackground(JComponent c) {
@@ -152,15 +177,6 @@ public class LoginView extends JPanel{
 		emailField.setFont(font);
 		emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, emailField.getPreferredSize().height));
 		formPanel.add(emailField);
-		emailField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					handleLogin();
-				}
-			}
-		});
 		
 		formPanel.add(new JLabel());
 		
@@ -169,7 +185,6 @@ public class LoginView extends JPanel{
 		lblEmailRequired.setForeground(Color.RED);
 		lblEmailRequired.setVisible(false);
 		formPanel.add(lblEmailRequired);
-		
 		
 		JLabel lblPasswordLabel = new JLabel("Contraseña: ");
 		lblPasswordLabel.setFont(font);
@@ -182,16 +197,6 @@ public class LoginView extends JPanel{
 		passwordField.setMaximumSize(new Dimension(Integer.MAX_VALUE, passwordField.getPreferredSize().height));
 		formPanel.add(passwordField);
 		
-		passwordField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					handleLogin();
-				}
-			}
-		});
-		
 		formPanel.add(new JLabel());
 		
 		lblPasswordRequired = new JLabel("");
@@ -202,8 +207,6 @@ public class LoginView extends JPanel{
 		SpringUtilities.makeCompactGrid(formPanel, 4, 2, 0, 0, 10, 10);
 		
 		add(formPanel);
-		
-		
 	}
 	
 	private ImageIcon loadIcon(String path, int w, int h) {
@@ -241,80 +244,18 @@ public class LoginView extends JPanel{
 		}
 	}
 	
-	private void handleLogin() {
-		
-		try {
-			if(validateCredentials(emailField.getText(), String.valueOf(passwordField.getPassword()))) {
-				JOptionPane.showMessageDialog(
-					this,
-	 				"Se inició la sesión", 
-	 				"Sesión iniciada", 
-	 				JOptionPane.INFORMATION_MESSAGE
-	 			);
-				
-				new MainWindow();
-				window.dispose();
-			}
-		}catch(InvalidUserException ex) {
-			showPasswordError("Credenciales Incorrectas");
-		}catch(InvalidPasswordException ex) {
-			showPasswordError("Credenciales Incorrectas");
-		}
-	}
-	
-	private void handleRegistration() {
-		new RegistrationWindow();
-		window.dispose();
-	}
-	
-	private void showEmailError(String message) {
+	public void showEmailError(String message) {
 		lblEmailRequired.setText(message);
 		lblEmailRequired.setVisible(true);
 	}
 	
-	private void showPasswordError(String message) {
+	public void showPasswordError(String message) {
 		lblPasswordRequired.setText(message);
 	}
 	
-	private void resetErrorMessages() {
+	public void resetErrorMessages() {
 		lblEmailRequired.setText("");
 		lblPasswordRequired.setText("");
 	}
-	
-	private boolean validateCredentials(String email, String password) 
-			throws InvalidUserException, InvalidPasswordException {
-		
-		resetErrorMessages();
-		
-		boolean valid = true;
-		
-		if(email.trim().isEmpty()) {
-			showEmailError("El correo es obligatorio");
-			valid = false;
-		}
-				
-		if(password.trim().isEmpty()) {
-			showPasswordError("La contraseña es obligatoria");
-			valid = false;
-		};
-		
-		
-		
-		if(!email.trim().isEmpty() && !email.trim().equals("b.lara@uabcs.mx")) {
-			throw new InvalidUserException("El correo no coincide.");
-		}
-		
-		if(!password.trim().isEmpty() && !password.trim().equals("1234")) {
-			throw new InvalidPasswordException("La contraseña no coincide");
-		}
-		
-		return valid;
-	}
-	
-	
-	
-	
-	
-	
 	
 }

@@ -9,6 +9,7 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import controllers.LoginController;
 import utils.AppFont;
 import views.RegistrationWindow;
 import views.LoginWindow;
@@ -39,6 +40,8 @@ public class Main {
 		
 		//MainWindow ventanita = new MainWindow();
 		LoginWindow ventanita = new LoginWindow();
+		new LoginController(ventanita.getLoginView());
+		
 		//RegistrationWindow ventanita = new RegistrationWindow();
 		showOnScreen(1, ventanita);
 	}
