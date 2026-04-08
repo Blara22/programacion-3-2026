@@ -30,6 +30,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
+import exceptions.InvalidPasswordException;
+import exceptions.InvalidUserException;
 import lib.SpringUtilities;
 import views.components.TextPrompt;
 
@@ -241,16 +243,22 @@ public class LoginView extends JPanel{
 	
 	private void handleLogin() {
 		
-		if(validateCredentials(emailField.getText(), String.valueOf(passwordField.getPassword()))) {
-			JOptionPane.showMessageDialog(
-				this,
- 				"Se inició la sesión", 
- 				"Sesión iniciada", 
- 				JOptionPane.INFORMATION_MESSAGE
- 			);
-			
-			new MainWindow();
-			window.dispose();
+		try {
+			if(validateCredentials(emailField.getText(), String.valueOf(passwordField.getPassword()))) {
+				JOptionPane.showMessageDialog(
+					this,
+	 				"Se inició la sesión", 
+	 				"Sesión iniciada", 
+	 				JOptionPane.INFORMATION_MESSAGE
+	 			);
+				
+				new MainWindow();
+				window.dispose();
+			}
+		}catch(InvalidUserException ex) {
+			showPasswordError("Credenciales Incorrectas");
+		}catch(InvalidPasswordException ex) {
+			showPasswordError("Credenciales Incorrectas");
 		}
 	}
 	
@@ -273,7 +281,8 @@ public class LoginView extends JPanel{
 		lblPasswordRequired.setText("");
 	}
 	
-	private boolean validateCredentials(String email, String password) {
+	private boolean validateCredentials(String email, String password) 
+			throws InvalidUserException, InvalidPasswordException {
 		
 		resetErrorMessages();
 		
@@ -288,6 +297,16 @@ public class LoginView extends JPanel{
 			showPasswordError("La contraseña es obligatoria");
 			valid = false;
 		};
+		
+		
+		
+		if(!email.trim().isEmpty() && !email.trim().equals("b.lara@uabcs.mx")) {
+			throw new InvalidUserException("El correo no coincide.");
+		}
+		
+		if(!password.trim().isEmpty() && !password.trim().equals("1234")) {
+			throw new InvalidPasswordException("La contraseña no coincide");
+		}
 		
 		return valid;
 	}
