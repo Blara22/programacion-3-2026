@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 public class User {
 	
 	private String name;
@@ -7,7 +9,7 @@ public class User {
 	private String country;
 	private char gender;
 	private String description;
-	private String[] languages;
+	private List<String> languages;
 	private String password;
 	
 	public User() {
@@ -19,7 +21,7 @@ public class User {
 		this.password = password;
 	}
 	
-	public User(String name, String email, String country, char gender, String description, String[] languages) {
+	public User(String name, String email, String country, char gender, String description, List<String> languages) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -28,8 +30,6 @@ public class User {
 		this.description = description;
 		this.languages = languages;
 	}
-
-
 
 	public String getName() {
 		return name;
@@ -71,16 +71,26 @@ public class User {
 		this.description = description;
 	}
 
-	public String[] getLanguages() {
+	public List<String> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(String[] languages) {
+	public void setLanguages(List<String> languages) {
 		this.languages = languages;
 	}
 	
 	public String getPassword() {
 		return password;
+	}
+	
+	public String toString() {
+		return "Nombre: " + name +
+		           "\nEmail: " + email +
+		           "\nPaís: " + country +
+		           "\nGénero: " + gender +
+		           "\nDescripción: " + description +
+		           "\nLenguajes:\n" +
+		           String.join("\n", languages);
 	}
 	
 	

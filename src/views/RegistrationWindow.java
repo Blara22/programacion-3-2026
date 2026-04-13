@@ -9,11 +9,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,13 +29,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import utils.AppFont;
 import views.components.ErrorLabel;
 
 public class RegistrationWindow extends JFrame {
+
+	private JButton btnValidate;
+	private JButton btnReturn;
 
 	private JTextField txtName;
 	private JTextField txtEmail;
@@ -69,15 +68,66 @@ public class RegistrationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image iconImage = toolkit.getImage("src/img/icono.png");
+		Image iconImage = toolkit.getImage("src/assets/img/icono.png");
 		setIconImage(iconImage);
 
 		add(createTitlePanel(), BorderLayout.NORTH);
 		add(createFormPanel());
 		add(createButtonPanel(), BorderLayout.SOUTH);
+		
+		registerListeners();
 
 		pack();
 		setVisible(true);
+	}
+	
+	public void registerListeners() {
+		txtName.addFocusListener(new FocusAdapter(){
+
+            @Override
+            public void focusGained(FocusEvent e){
+                txtName.selectAll();
+            }
+
+        });
+		
+		txtName.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				txtName.setForeground(
+                        new Color(
+                                (int)(Math.random()*255),
+                                (int)(Math.random()*255),
+                                (int)(Math.random()*255)
+                        )
+                );
+			}
+		});
+		
+		txtEmail.addFocusListener(new FocusAdapter(){
+
+            @Override
+            public void focusGained(FocusEvent e){
+                txtEmail.setBorder(
+                        BorderFactory.createLineBorder(Color.BLUE,2));
+            }
+
+            @Override
+            public void focusLost(FocusEvent e){
+                txtEmail.setBorder(
+                        BorderFactory.createLineBorder(Color.GRAY,1));
+            }
+
+        });
+		
+	}
+	
+	public int confirmReturn() {
+	    return JOptionPane.showConfirmDialog(
+	        this,
+	        "¿Seguro que deseas regresar? Se perderán todos los datos",
+	        "¿Seguro?",
+	        JOptionPane.YES_NO_OPTION
+	    );
 	}
 
 	private JPanel createTitlePanel() {
@@ -96,26 +146,29 @@ public class RegistrationWindow extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
-		
+
 		JScrollPane scroll = new JScrollPane(panel);
 		scroll.setBorder(null);
 		scroll.setHorizontalScrollBar(null);
 		scroll.getVerticalScrollBar().setUnitIncrement(14);
 
 		txtName = new JTextField();
+
 		txtEmail = new JTextField();
 
 		cboCountry = new JComboBox<>(new String[] { "Seleccione", "México", "USA", "Canada" });
 
 		rbtnMale = new JRadioButton("Masculino");
+		rbtnMale.setActionCommand("M");
+
 		rbtnFemale = new JRadioButton("Femenino");
+		rbtnFemale.setActionCommand("F");
 
 		genderGroup = new ButtonGroup();
 		genderGroup.add(rbtnMale);
 		genderGroup.add(rbtnFemale);
 
 		chkTerms = new JCheckBox("Aceptar términos");
-		chkTerms.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		txtDescription = new JTextArea(4, 20);
 
@@ -128,16 +181,9 @@ public class RegistrationWindow extends JFrame {
 		lblErrorTerms = createErrorLabel();
 		lblErrorList = createErrorLabel();
 		lblErrorDescription = createErrorLabel();
-		
-		assignListeners();
 
-		/* CREAR PANELES CON COMPONENTES */
-
-		// Nombre
-		panel.add(createField("Nombre: ", txtName, lblErrorName));
-		// Email
-		panel.add(createField("Email: ", txtEmail, lblErrorEmail));
-
+		panel.add(createField("Nombre:", txtName, lblErrorName));
+		panel.add(createField("Email:", txtEmail, lblErrorEmail));
 		panel.add(createField("País:", cboCountry, lblErrorCombo));
 
 		JPanel genderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -149,9 +195,8 @@ public class RegistrationWindow extends JFrame {
 		panel.add(createField("Descripción:", new JScrollPane(txtDescription), lblErrorDescription));
 		panel.add(createField("Lenguajes:", new JScrollPane(lstLanguages), lblErrorList));
 
-		JPanel termsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		JPanel termsPanel = new JPanel(new FlowLayout());
 		termsPanel.add(chkTerms);
-		termsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panel.add(createField("", termsPanel, lblErrorTerms));
 
@@ -162,23 +207,10 @@ public class RegistrationWindow extends JFrame {
 
 		JPanel panel = new JPanel();
 
-		JButton btnValidate = new JButton("Validar");
-		btnValidate.addActionListener(e -> validateForm());
+		btnValidate = new JButton("Validar");
+		btnReturn = new JButton("Regresar");
 
 		panel.add(btnValidate);
-		
-		JButton btnReturn = new JButton("Regresar");
-		btnReturn.addActionListener(e -> {
-			
-			int option = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas regresar? Se perderán todos los datos");
-			
-			if(option == JOptionPane.YES_OPTION) {
-				new LoginWindow();
-				dispose();
-			}
-			
-		});
-		
 		panel.add(btnReturn);
 
 		return panel;
@@ -203,7 +235,6 @@ public class RegistrationWindow extends JFrame {
 		panel.add(errorLabel);
 
 		return panel;
-
 	}
 
 	private JLabel createErrorLabel() {
@@ -215,228 +246,107 @@ public class RegistrationWindow extends JFrame {
 
 		return label;
 	}
-	
-	private void assignListeners() {
-		cboCountry.addActionListener(e -> {
-			validateComboBox();
-		});
-		
-		chkTerms.addActionListener(e -> validateTerms());
-		
-		txtName.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				validateName();
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				validateName();
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				validateName();
-			}
-		});
-		
-		lstLanguages.addListSelectionListener(e -> validateList());
-		
-		txtName.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar())) {
-					System.out.println("Es número o especial");
-					e.consume();
-				}
-				
-				if(txtName.getText().length() >= 10) {
-					e.consume();
-				}
-				
-				txtName.setForeground(new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255) ));
-				
-				char c = e.getKeyChar();
-				
-				if(Character.isLowerCase(c)) {
-					e.setKeyChar(Character.toUpperCase(c));
-				}
-				
-				/*if(!Character.isDigit(e.getKeyChar())) {
-					e.consume();
-				}*/
-				
-				
-			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				System.out.println(e.getKeyCode());
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					txtEmail.requestFocusInWindow();
-					System.out.println("Enter");
-				}
-			}
-		});
-		
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				cboCountry.requestFocusInWindow();
-			}
-		});
-		
-		txtName.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				txtName.selectAll();
-			}
-		});
-		
-		txtEmail.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				txtEmail.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-			}
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				txtEmail.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-			}
-			
-			
-		});
+
+	public JButton getBtnValidate() {
+		return btnValidate;
 	}
 
-	private void validateForm() {
-		resetErrorLabels();
-
-		boolean valid = true;
-
-		if (!validateName())
-			valid = false;
-
-		if (!validateEmail())
-			valid = false;
-
-		if (!validateComboBox())
-			valid = false;
-
-		if (!validateGender())
-			valid = false;
-
-		if (!validateTerms())
-			valid = false;
-
-		if (!validateDescription())
-			valid = false;
-
-		if (!validateList())
-			valid = false;
-
-		if (valid) {
-			JOptionPane.showMessageDialog(this, "Registro exitoso");
-		}
-
+	public JButton getBtnReturn() {
+		return btnReturn;
 	}
 
-	private void resetErrorLabels() {
+	public JTextField getTxtName() {
+		return txtName;
+	}
+
+	public JTextField getTxtEmail() {
+		return txtEmail;
+	}
+
+	public JComboBox<String> getCboCountry() {
+		return cboCountry;
+	}
+
+	public ButtonGroup getGenderGroup() {
+		return genderGroup;
+	}
+
+	public JCheckBox getChkTerms() {
+		return chkTerms;
+	}
+
+	public JList<String> getLstLanguages() {
+		return lstLanguages;
+	}
+
+	public String getUserName() {
+		return txtName.getText();
+	}
+
+	public String getEmail() {
+		return txtEmail.getText();
+	}
+
+	public String getCountry() {
+		return String.valueOf(cboCountry.getSelectedItem());
+	}
+
+	public char getGender() {
+		return genderGroup.getSelection().getActionCommand().charAt(0);
+	}
+
+	public String getDescription() {
+		return txtDescription.getText();
+	}
+
+	public List<String> getLanguages() {
+		return lstLanguages.getSelectedValuesList();
+	}
+
+	public int getCountryIndex() {
+		return cboCountry.getSelectedIndex();
+	}
+
+	public boolean isTermsAccepted() {
+		return chkTerms.isSelected();
+	}
+
+	public void resetErrors() {
+		lblErrorName.setText("");
 		lblErrorEmail.setText("");
+		lblErrorCombo.setText("");
 		lblErrorGender.setText("");
+		lblErrorTerms.setText("");
+		lblErrorList.setText("");
 		lblErrorDescription.setText("");
 	}
 
-	private boolean validateName() {
-
-		if (txtName.getText().trim().isEmpty()) {
-			lblErrorName.setText("El nombre es obligatorio");
-			return false;
-		}
-		
-		if (txtName.getText().trim().length() <= 3) {
-			lblErrorName.setText("Mínimo 4 caracteres");
-			return false;
-		}
-
-		lblErrorName.setText("");
-		return true;
+	public void setErrorName(String m) {
+		lblErrorName.setText(m);
 	}
 
-	private boolean validateEmail() {
-
-		if (txtEmail.getText().trim().isEmpty()) {
-			lblErrorEmail.setText("El email es obligatorio");
-			return false;
-		}
-
-		if (!txtEmail.getText().contains("@")) {
-			lblErrorEmail.setText("Email inválido");
-			return false;
-		}
-
-		return true;
+	public void setErrorEmail(String m) {
+		lblErrorEmail.setText(m);
 	}
 
-	private boolean validateComboBox() {
-		
-		if (cboCountry.getSelectedIndex() == 0) {
-			lblErrorCombo.setText("Seleccione un país");
-			return false;
-		}
-
-		lblErrorCombo.setText("");
-		return true;
+	public void setErrorCombo(String m) {
+		lblErrorCombo.setText(m);
 	}
 
-	private boolean validateGender() {
-
-		if (!rbtnMale.isSelected() && !rbtnFemale.isSelected()) {
-			lblErrorGender.setText("Seleccione un género");
-			return false;
-		}
-
-		return true;
+	public void setErrorGender(String m) {
+		lblErrorGender.setText(m);
 	}
 
-	private boolean validateTerms() {
-
-		if (!chkTerms.isSelected()) {
-			lblErrorTerms.setText("Debe aceptar los términos");
-			return false;
-		}
-
-		lblErrorTerms.setText("");
-		return true;
+	public void setErrorTerms(String m) {
+		lblErrorTerms.setText(m);
 	}
 
-	private boolean validateDescription() {
-
-		if (txtDescription.getText().trim().length() < 10) {
-			lblErrorDescription.setText("Descripción mínima 10 caracteres");
-			return false;
-		}
-
-		return true;
+	public void setErrorList(String m) {
+		lblErrorList.setText(m);
 	}
 
-	private boolean validateList() {
-
-		if (lstLanguages.getSelectedValuesList().isEmpty()) {
-			lblErrorList.setText("Seleccione al menos un lenguaje");
-			return false;
-		}
-
-		lblErrorList.setText("");
-		return true;
+	public void setErrorDescription(String m) {
+		lblErrorDescription.setText(m);
 	}
 
 }
-
-
-
-
-
-
-

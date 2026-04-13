@@ -21,7 +21,7 @@ public class LoginWindow extends JFrame {
 		setLocationRelativeTo(null);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image icon = tk.getImage("src/img/icono.png");
+		Image icon = tk.getImage("src/assets/img/icono.png");
 		setIconImage(icon);
 		
 		/*ImageIcon cursorIcon = new ImageIcon("src/img/icono.png");

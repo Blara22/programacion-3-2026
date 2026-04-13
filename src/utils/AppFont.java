@@ -10,7 +10,7 @@ public class AppFont {
 		try {
 			base = Font.createFont(
 					Font.TRUETYPE_FONT, 
-					AppFont.class.getResourceAsStream("/fonts/arimo.ttf"));
+					AppFont.class.getResourceAsStream("/assets/fonts/arimo.ttf"));
 			
 		}catch(Exception e) {
 			base = new Font("Times New Roman", Font.PLAIN, 14);
