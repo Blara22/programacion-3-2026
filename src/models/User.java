@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class User {
@@ -14,11 +16,13 @@ public class User {
 	
 	public User() {
 		
+		languages = new ArrayList<>();
 	}
 	
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
+		languages = new ArrayList<>();
 	}
 	
 	public User(String name, String email, String country, char gender, String description, List<String> languages) {
@@ -92,6 +96,44 @@ public class User {
 		           "\nLenguajes:\n" +
 		           String.join("\n", languages);
 	}
+	
+	public String toCsv() {
+		return name + "," +
+		           email + "," +
+		           country + "," +
+		           gender + "," +
+		           description + "," +
+		           String.join("|", languages);
+	}
+	
+	public static User fromCsv(String userData) {
+		String data[] = userData.split(",");
+		
+		String name = data[0];
+		String email = data[1];
+	    String country = data[2];
+	    char gender = data[3].charAt(0);
+	    String description = data[4];
+	    
+	    List<String> languages = new ArrayList<String>();
+	    
+	    if(data.length > 5) {
+	    	languages = Arrays.asList(data[5].split("\\|"));
+	    }
+	    
+	    return new User(name, email, country, gender, description, languages);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

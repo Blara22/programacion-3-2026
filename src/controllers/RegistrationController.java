@@ -4,22 +4,26 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import models.User;
+import repository.UserRepository;
 import views.LoginWindow;
+import views.MainWindow;
 import views.RegistrationWindow;
 
 public class RegistrationController {
 
     private RegistrationWindow view;
+    private UserRepository repository;
 
     public RegistrationController(RegistrationWindow view){
         this.view = view;
-
+        this.repository = new UserRepository();
         registerListeners();
     }
 
@@ -38,8 +42,10 @@ public class RegistrationController {
                         view.getLanguages()
                 );
                 
-                System.out.println(user);
-                System.out.println("Guardado.");
+                registerUser(user);
+                
+                new HomeController(new MainWindow());
+                view.dispose();
 
             }
 
@@ -119,6 +125,19 @@ public class RegistrationController {
 
         view.getLstLanguages().addListSelectionListener(e -> validateLanguages());
 
+    }
+    
+    private void registerUser(User user) {
+    	
+    	try {
+    		repository.save(user);
+    		
+    		JOptionPane.showMessageDialog(view, "Usuario registrado");
+    		
+    	}catch(IOException e) {
+    		JOptionPane.showMessageDialog(view, e.getMessage());
+    	}
+    	
     }
 
     private boolean validateForm(){

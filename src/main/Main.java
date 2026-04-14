@@ -40,8 +40,8 @@ public class Main {
 		//UIManager.put("Button.font", AppFont.title());
 		//UIManager.put("TextField.font", AppFont.small());	
 		
-		//new HomeController(new MainWindow());
-		new LoginController(new LoginWindow().getLoginView());
+		new HomeController(new MainWindow());
+		//new LoginController(new LoginWindow().getLoginView());
 		//new RegistrationController(new RegistrationWindow());
 		//showOnScreen(1, ventanita);
 	}

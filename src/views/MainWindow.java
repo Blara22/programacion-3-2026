@@ -1,9 +1,6 @@
 package views;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -18,7 +15,7 @@ import javax.swing.JPanel;
 public class MainWindow extends JFrame {
 
 	public JMenuItem mItemExit;
-	public JButton btnViewUsers;
+	public JButton btnUsers;
 
 	public MainWindow() {
 
@@ -31,6 +28,9 @@ public class MainWindow extends JFrame {
 
 		JPanel panel = new JPanel();
 		add(panel);
+		
+		btnUsers = new JButton("Ver Usuarios");
+		panel.add(btnUsers);
 
 		setVisible(true);
 	}
