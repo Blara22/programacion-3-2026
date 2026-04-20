@@ -44,6 +44,9 @@ public class HomeController {
 	}
 	
 	private void showUsers() {
+		
+		UserController controller = new UserController(view.usersPanel);
+		
 		UserRepository repository = new UserRepository();
 		
 		try {
@@ -62,13 +65,13 @@ public class HomeController {
 	}
 	
 	private void handleClose() {
-		int option = view.confirmExit();
+		/*int option = view.confirmExit();
 		System.out.println(option);
 
 		if (option == JOptionPane.YES_OPTION) {
-			new LoginController(new LoginWindow().getLoginView());
+			new LoginController(new LoginWindow().getLoginView());*/
 			view.dispose();
-		}
+		//}
 	}
 	
 }
