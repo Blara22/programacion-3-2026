@@ -31,7 +31,7 @@ public class MainWindow extends JFrame {
 	
 	public MainWindow() {
 
-		setSize(500, 500);
+		setSize(1000, 500);
 		setTitle("Mi aplicación");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
