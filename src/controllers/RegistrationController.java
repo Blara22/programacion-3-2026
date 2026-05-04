@@ -4,7 +4,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -32,6 +38,8 @@ public class RegistrationController {
         view.getBtnValidate().addActionListener(e -> {
 
             if(validateForm()){
+            	
+            	String imagePathString = saveImage();
 
                 User user = new User(
                         view.getUserName(),
@@ -39,7 +47,8 @@ public class RegistrationController {
                         view.getCountry(),
                         view.getGender(),
                         view.getDescription(),
-                        view.getLanguages()
+                        view.getLanguages(),
+                        imagePathString
                 );
                 
                 registerUser(user);
@@ -124,6 +133,8 @@ public class RegistrationController {
         view.getChkTerms().addActionListener(e -> validateTerms());
 
         view.getLstLanguages().addListSelectionListener(e -> validateLanguages());
+        
+        view.getBtnSelectImage().addActionListener(e -> view.chooseImage());
 
     }
     
@@ -139,6 +150,39 @@ public class RegistrationController {
     	}
     	
     }
+    
+    private String saveImage() {
+    	try {
+    		String original = view.getSelectedImagePath();
+    		
+    		if(original == null)
+    			return null;
+    		
+    		File source = new File(original);
+    		
+    		String extension = original.substring(original.lastIndexOf("."));
+    		
+    		String newName = UUID.randomUUID() + extension;
+    		
+    		String folder = "." + File.separator + "images";
+    		
+    		File directory = new File(folder);
+    		
+    		if(!directory.exists()) {
+    			directory.mkdir();
+    		}
+    		
+    		Path destination = Paths.get(folder, newName);
+    		
+    		Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+    		
+    		return destination.toString();
+    		
+    	}catch(Exception ex) {
+    		ex.printStackTrace();
+    		return null;
+    	}
+    }
 
     private boolean validateForm(){
 
@@ -153,6 +197,7 @@ public class RegistrationController {
         if(!validateTerms()) valid=false;
         if(!validateDescription()) valid=false;
         if(!validateLanguages()) valid=false;
+        if(!validateImage()) valid = false;
 
         return valid;
     }
@@ -243,5 +288,16 @@ public class RegistrationController {
         view.setErrorList("");
         return true;
     }
+    
+    private boolean validateImage(){
+
+	    if(view.getSelectedImagePath() == null){
+	        view.setErrorImage("Seleccione una imagen");
+	        return false;
+	    }
+
+	    view.setErrorImage("");
+	    return true;
+	}
 
 }

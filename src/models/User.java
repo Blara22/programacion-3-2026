@@ -13,6 +13,7 @@ public class User {
 	private String description;
 	private List<String> languages;
 	private String password;
+	private String imagePath;
 	
 	public User() {
 		
@@ -25,7 +26,7 @@ public class User {
 		languages = new ArrayList<>();
 	}
 	
-	public User(String name, String email, String country, char gender, String description, List<String> languages) {
+	public User(String name, String email, String country, char gender, String description, List<String> languages, String imagePath) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -33,6 +34,7 @@ public class User {
 		this.gender = gender;
 		this.description = description;
 		this.languages = languages;
+		this.imagePath = imagePath;
 	}
 
 	public String getName() {
@@ -87,6 +89,14 @@ public class User {
 		return password;
 	}
 	
+	public String getImagePath() {
+		return imagePath;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	public String toString() {
 		return "Nombre: " + name +
 		           "\nEmail: " + email +
@@ -121,7 +131,7 @@ public class User {
 	    	languages = Arrays.asList(data[5].split("\\|"));
 	    }
 	    
-	    return new User(name, email, country, gender, description, languages);
+	    return new User(name, email, country, gender, description, languages, null);
 		
 	}
 	

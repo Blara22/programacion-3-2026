@@ -11,14 +11,17 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -29,8 +32,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import utils.AppFont;
+import utils.Config;
 import views.components.ErrorLabel;
 
 public class RegistrationWindow extends JFrame {
@@ -59,6 +64,12 @@ public class RegistrationWindow extends JFrame {
 	private JLabel lblErrorTerms;
 	private JLabel lblErrorList;
 	private JLabel lblErrorDescription;
+	
+	private JButton btnSelectImage;
+	private JLabel lblImagePreview;
+	private JLabel lblImageName;
+	private String selectedImagePath;
+	private JLabel lblErrorImage;
 
 	public RegistrationWindow() {
 
@@ -195,6 +206,29 @@ public class RegistrationWindow extends JFrame {
 		panel.add(createField("Descripción:", new JScrollPane(txtDescription), lblErrorDescription));
 		panel.add(createField("Lenguajes:", new JScrollPane(lstLanguages), lblErrorList));
 
+		btnSelectImage = new JButton("Seleccionar imagen");
+
+		lblImageName = new JLabel("Ninguna imagen seleccionada");
+
+		lblImagePreview = new JLabel();
+		lblImagePreview.setPreferredSize(new Dimension(120,120));
+		lblImagePreview.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+		lblErrorImage = createErrorLabel();
+
+		JPanel imagePanel = new JPanel();
+		imagePanel.setLayout(new BoxLayout(imagePanel, BoxLayout.Y_AXIS));
+
+		btnSelectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblImagePreview.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lblImageName.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+		imagePanel.add(lblImagePreview);
+		imagePanel.add(btnSelectImage);
+		imagePanel.add(lblImageName);
+
+		panel.add(createField("Foto:", imagePanel, lblErrorImage));
+		
 		JPanel termsPanel = new JPanel(new FlowLayout());
 		termsPanel.add(chkTerms);
 
@@ -245,6 +279,36 @@ public class RegistrationWindow extends JFrame {
 		label.setMaximumSize(new Dimension(Integer.MAX_VALUE, label.getPreferredSize().height));
 
 		return label;
+	}
+	
+	public void chooseImage() {
+		
+		String lastDirectory = Config.get("registration.image.last.directory", System.getProperty("user.home"));
+		
+		JFileChooser chooser = new JFileChooser(lastDirectory);
+		chooser.setDialogTitle("Seleccionar imagen");
+		
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "jpg", "jpeg", "png");
+		chooser.setFileFilter(filter);
+		
+		int option = chooser.showOpenDialog(this);
+		
+		if(option == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			
+			selectedImagePath = file.getAbsolutePath();
+			lastDirectory = file.getParent();
+			
+			Config.set("registration.image.last.directory", lastDirectory);
+			
+			lblImageName.setText(file.getName());
+			
+			ImageIcon icon = new ImageIcon(selectedImagePath);
+			Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+			
+			lblImagePreview.setIcon(new ImageIcon(img));
+		}
+		
 	}
 
 	public JButton getBtnValidate() {
@@ -310,6 +374,14 @@ public class RegistrationWindow extends JFrame {
 	public boolean isTermsAccepted() {
 		return chkTerms.isSelected();
 	}
+	
+	public JButton getBtnSelectImage() {
+		return btnSelectImage;
+	}
+
+	public String getSelectedImagePath() {
+		return selectedImagePath;
+	}
 
 	public void resetErrors() {
 		lblErrorName.setText("");
@@ -319,6 +391,7 @@ public class RegistrationWindow extends JFrame {
 		lblErrorTerms.setText("");
 		lblErrorList.setText("");
 		lblErrorDescription.setText("");
+		lblErrorImage.setText("");
 	}
 
 	public void setErrorName(String m) {
@@ -347,6 +420,10 @@ public class RegistrationWindow extends JFrame {
 
 	public void setErrorDescription(String m) {
 		lblErrorDescription.setText(m);
+	}
+	
+	public void setErrorImage(String m) {
+		lblErrorImage.setText(m);
 	}
 
 }
