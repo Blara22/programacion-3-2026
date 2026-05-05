@@ -7,12 +7,14 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import controllers.HomeController;
 import controllers.LoginController;
 import controllers.RegistrationController;
 import utils.AppFont;
+import utils.ThemeManager;
 import views.RegistrationWindow;
 import views.LoginWindow;
 import views.MainWindow;
@@ -29,7 +31,7 @@ public class Main {
 	        e.printStackTrace();
 	    }*/
 		
-		//FlatLightLaf.setup();
+		ThemeManager.applySavedTheme();
 		
 		/*
 		 * Estas línean cambian de forma global la fuente para labels, buttons y textfields

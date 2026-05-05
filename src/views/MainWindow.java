@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import utils.ThemeManager;
+
 public class MainWindow extends JFrame {
 
 	public static final String HOME = "HOME";
@@ -98,6 +100,12 @@ public class MainWindow extends JFrame {
 	    mItemExit = new JMenuItem("Exit");
 	    mItemExit.setMnemonic(KeyEvent.VK_E);
 	    menuFile.add(mItemExit);
+	    
+	    JMenuItem theme = new JMenuItem("Cambiar modo");
+	    theme.addActionListener(e -> {
+	    	ThemeManager.toggle();
+	    });
+	    mb.add(theme);
 
 	    JMenu menuOtherOption = new JMenu("Other Option");
 	    menuOtherOption.setMnemonic(KeyEvent.VK_O);
@@ -121,6 +129,14 @@ public class MainWindow extends JFrame {
 	        "¿Seguro?",
 	        JOptionPane.YES_NO_OPTION
 	    );
+	}
+	
+	public void setWindowSize(int width, int height) {
+		setSize(width, height);
+	}
+	
+	public void setWindowLocation(int x, int y) {
+		setLocation(x, y);
 	}
 
 	// Este método no se usa en el proyecto, pero queda de ejemplo para listeners de ventana, mouse, etc
