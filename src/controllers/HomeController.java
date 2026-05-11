@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import utils.Config;
+import config.Config;
 import views.MainWindow;
 
 public class HomeController {

@@ -34,8 +34,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import config.Config;
 import utils.AppFont;
-import utils.Config;
 import views.components.ErrorLabel;
 
 public class RegistrationWindow extends JFrame {

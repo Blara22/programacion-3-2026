@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
-import lib.SpringUtilities;
+import utils.SpringUtilities;
 import views.components.TextPrompt;
 
 public class LoginView extends JPanel {

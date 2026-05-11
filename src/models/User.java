@@ -6,6 +6,7 @@ import java.util.List;
 
 public class User {
 	
+	private int id;
 	private String name;
 	private String email;
 	private String country;
@@ -20,6 +21,13 @@ public class User {
 		languages = new ArrayList<>();
 	}
 	
+	public User(int id, String email, String password) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		languages = new ArrayList<>();
+	}
+	
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
@@ -27,7 +35,6 @@ public class User {
 	}
 	
 	public User(String name, String email, String country, char gender, String description, List<String> languages, String imagePath) {
-		super();
 		this.name = name;
 		this.email = email;
 		this.country = country;
@@ -35,6 +42,25 @@ public class User {
 		this.description = description;
 		this.languages = languages;
 		this.imagePath = imagePath;
+	}
+	
+	public User(int id, String name, String email, String country, char gender, String description, List<String> languages, String imagePath) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.country = country;
+		this.gender = gender;
+		this.description = description;
+		this.languages = languages;
+		this.imagePath = imagePath;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -107,7 +133,7 @@ public class User {
 		           String.join("\n", languages);
 	}
 	
-	public String toCsv() {
+	/*public String toCsv() {
 		return name + "," +
 		           email + "," +
 		           country + "," +
@@ -133,7 +159,7 @@ public class User {
 	    
 	    return new User(name, email, country, gender, description, languages, null);
 		
-	}
+	}*/
 	
 	
 	
