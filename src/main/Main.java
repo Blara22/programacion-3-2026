@@ -14,6 +14,7 @@ import controllers.HomeController;
 import controllers.LoginController;
 import controllers.RegistrationController;
 import utils.AppFont;
+import utils.PasswordUtils;
 import utils.ThemeManager;
 import views.RegistrationWindow;
 import views.LoginWindow;
@@ -42,8 +43,8 @@ public class Main {
 		//UIManager.put("Button.font", AppFont.title());
 		//UIManager.put("TextField.font", AppFont.small());	
 		
-		//new HomeController(new MainWindow());
-		new LoginController(new LoginWindow().getLoginView());
+		new HomeController(new MainWindow());
+		//new LoginController(new LoginWindow().getLoginView());
 		//new RegistrationController(new RegistrationWindow());
 		//showOnScreen(1, ventanita);
 	}

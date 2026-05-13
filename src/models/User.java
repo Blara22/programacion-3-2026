@@ -15,6 +15,7 @@ public class User {
 	private List<String> languages;
 	private String password;
 	private String imagePath;
+	private String role;
 	
 	public User() {
 		
@@ -34,7 +35,7 @@ public class User {
 		languages = new ArrayList<>();
 	}
 	
-	public User(String name, String email, String country, char gender, String description, List<String> languages, String imagePath) {
+	public User(String name, String email, String country, char gender, String description, List<String> languages, String imagePath, String role) {
 		this.name = name;
 		this.email = email;
 		this.country = country;
@@ -42,9 +43,10 @@ public class User {
 		this.description = description;
 		this.languages = languages;
 		this.imagePath = imagePath;
+		this.role = role;
 	}
 	
-	public User(int id, String name, String email, String country, char gender, String description, List<String> languages, String imagePath) {
+	public User(int id, String name, String email, String country, char gender, String description, List<String> languages, String imagePath, String role) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -53,6 +55,7 @@ public class User {
 		this.description = description;
 		this.languages = languages;
 		this.imagePath = imagePath;
+		this.role = role;
 	}
 	
 	public int getId() {
@@ -61,6 +64,14 @@ public class User {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getName() {

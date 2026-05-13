@@ -48,7 +48,8 @@ public class RegistrationController {
                         view.getGender(),
                         view.getDescription(),
                         view.getLanguages(),
-                        imagePathString
+                        imagePathString,
+                        "ADMIN"
                 );
                 
                 registerUser(user);

@@ -43,6 +43,7 @@ public class UserFormDialog extends JDialog{
     private JButton btnCancel;
 
     private User user;
+    
     private boolean saved = false;
     		
     public UserFormDialog(JFrame parent, User user) {
@@ -153,6 +154,7 @@ public class UserFormDialog extends JDialog{
 	}
     
     private void loadData() {
+    	
     	if(user != null) {
     		txtName.setText(user.getName());
             txtEmail.setText(user.getEmail());
@@ -200,7 +202,7 @@ public class UserFormDialog extends JDialog{
         }
         
         if(user == null) {
-        	user = new User(name, email, country, gender, description, languages, null);
+        	user = new User(name, email, country, gender, description, languages, null, "ADMIN");
         }else {
         	user.setName(name);
         	user.setEmail(email);

@@ -41,10 +41,19 @@ public class UserController {
 		});
 		
 		this.view.getBtnPdf().addActionListener(e -> generatePdf());
+		
+		this.view.getBtnDelete().addActionListener(e -> {
+			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
+			if(deleted) {
+				//Eliminamos de la tabla
+				//TODO: Eliminar una sola fila
+				loadUsers();
+			}
+				
+		});
 	}
 	
 	public void loadUsers() {	
-		System.out.println("Carga usuarios");
 		try {
 			List<User> users = repo.getUsers();
 			
@@ -69,9 +78,11 @@ public class UserController {
 			User savedUser = dialog.getUser();
 			
 			try {
+				//Añadir nuevo
 				if(user == null) {
 					repo.save(savedUser);
 				}else {
+					//Editar existente
 					int row = view.getSelectedRow();
 					repo.update(row, savedUser);
 				}

@@ -16,6 +16,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import models.User;
+import utils.Session;
 import utils.ThemeManager;
 
 public class MainWindow extends JFrame {
@@ -30,9 +32,9 @@ public class MainWindow extends JFrame {
 	
 	private CardLayout cardLayout;
 	private JPanel container;
+	private User user;
 	
 	public MainWindow() {
-
 		setSize(1000, 500);
 		setTitle("Mi aplicación");
 		setLocationRelativeTo(null);
@@ -63,7 +65,7 @@ public class MainWindow extends JFrame {
 		container = new JPanel(cardLayout);
 		
 		JPanel homePanel = new JPanel();
-		homePanel.add(new JLabel("Bienvenido al Sistema"));
+		homePanel.add(new JLabel("Bienvenido al Sistema "));
 		
 		usersPanel = new UsersView();
 		
