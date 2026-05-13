@@ -11,6 +11,7 @@ import exceptions.InvalidPasswordException;
 import exceptions.InvalidUserException;
 import models.User;
 import repository.LoginRepository;
+import utils.Session;
 import views.LoginView;
 import views.MainWindow;
 import views.RegistrationWindow;
@@ -63,11 +64,18 @@ public class LoginController {
 			return;
 		}
 		
-		JOptionPane.showMessageDialog(view.getWindow(),  "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
-		new HomeController(new MainWindow());
+		Session.login(user);
+		
+		//JOptionPane.showMessageDialog(view.getWindow(),  "Se inició la sesión", "Sesión iniciada", JOptionPane.INFORMATION_MESSAGE);
+		
+		if(Session.getRole().equals("ADMIN")) {
+			new HomeController(new MainWindow());			
+			
+		}else {
+			JOptionPane.showMessageDialog(view.getWindow(), "No tienes permisos");
+		}
 		
 		view.getWindow().dispose();
-		
 	}
 	
 	private void addListeners() {
