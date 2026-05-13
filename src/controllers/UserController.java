@@ -45,9 +45,8 @@ public class UserController {
 		this.view.getBtnDelete().addActionListener(e -> {
 			boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
 			if(deleted) {
-				//Eliminamos de la tabla
-				//TODO: Eliminar una sola fila
-				loadUsers();
+				//Eliminamos de la tabla sólo la fila seleccionada
+				model.removeRow(view.getSelectedRow());
 			}
 				
 		});
@@ -81,13 +80,18 @@ public class UserController {
 				//Añadir nuevo
 				if(user == null) {
 					repo.save(savedUser);
+					model.addRow(savedUser); //Agrega el registro a la tabla
 				}else {
 					//Editar existente
 					int row = view.getSelectedRow();
-					repo.update(row, savedUser);
+					boolean updated = repo.update(row, savedUser);
+					if(updated) {
+						model.updateRow(row, savedUser); //Actualiza el registro de la tabla
+					}
 				}
 				
-				loadUsers();
+				//Ya no actualizamos toda la tabla
+				//loadUsers();
 			}catch(Exception e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(view, e.getMessage());

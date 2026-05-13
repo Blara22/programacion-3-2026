@@ -88,10 +88,13 @@ public class UserRepository {
 		
 	}
 	
-	public void update(int index, User updatedUser) throws IOException {
-		List<User> users = getUsers();
-		//Actualiza para la tabla
-		users.set(index, updatedUser);
+	/*
+	 * Cambié para que retorne si se pudo actualizar o no
+	 */
+	public boolean update(int index, User updatedUser) throws IOException {
+		//Ya no actualizamos la tabla completa
+		//List<User> users = getUsers();
+		//users.set(index, updatedUser);
 		
 		String sql = "UPDATE users SET name = ?, email = ?, country = ?,"
 				+ " description = ?, languages = ?, gender = ?, role = ? "
@@ -112,15 +115,14 @@ public class UserRepository {
 			int affectedRows = pst.executeUpdate();
 			
 			if(affectedRows > 0) {
-				System.out.println("Cambios guardados");
-			}else {
-				System.out.println("No se hicieron cambios");
-			}
-			
+				return true;
+			}			
 			
 		}catch(SQLException ex) {
 			ex.printStackTrace();
 		}
+		
+		return false;
 	}
 	
 			
