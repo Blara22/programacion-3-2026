@@ -65,7 +65,7 @@ public class MainWindow extends JFrame {
 		container = new JPanel(cardLayout);
 		
 		JPanel homePanel = new JPanel();
-		homePanel.add(new JLabel("Bienvenido al Sistema "));
+		homePanel.add(new JLabel("¡Bienvenido al Sistema! "));
 		
 		usersPanel = new UsersView();
 		
